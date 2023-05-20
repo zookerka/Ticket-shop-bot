@@ -15,14 +15,14 @@ async def on_startup(_):
 
 # User
 dp.register_message_handler(cmd_start, commands='start')
-dp.register_message_handler(cmd_event,IsUser(),commands='event')
+dp.register_message_handler(cmd_event,IsUser(),commands='eventinfo')
 dp.register_message_handler(cmd_events,IsUser(), commands='events')
 dp.register_message_handler(cmd_buy,IsUser(), commands='buy')
 dp.register_message_handler(cmd_help,IsUser(), commands='help')
 
-dp.register_message_handler(Schedule_handler, Text('Schedule for today'))
-dp.register_message_handler(main_menu, Text('Back to main menu'))
-dp.register_message_handler(Events_handler, Text('Events'))
+dp.register_message_handler(Schedule_handler,IsUser(), Text('Schedule for today'))
+dp.register_message_handler(main_menu,IsUser(), Text('Back to main menu'))
+dp.register_message_handler(Events_handler,IsUser(), Text('Events'))
 
 
 fsm_text = TextState()
@@ -30,14 +30,14 @@ dp.register_message_handler(fsm_text.button_handler,commands=['start'] ,state='*
 dp.register_message_handler(fsm_text.print_name_event, state=TextState.waiting_for_text)
 
 
-dp.register_message_handler(start_TextState, Text('Event'))
+dp.register_message_handler(start_TextState,IsUser(), Text('Event'))
 
 fsm_buy = BuyTicket()
 dp.register_message_handler(fsm_buy.cancel_buy,commands=['cancel'],state='*')
 dp.register_message_handler(fsm_buy.start_geting, commands=['start'], state='*')
 dp.register_message_handler(fsm_buy.data_name_event, state=BuyTicket.event_name)
 
-dp.register_message_handler(start_BuyTicket, Text('Buy a ticket'))
+dp.register_message_handler(start_BuyTicket,IsUser(), Text('Buy a ticket'))
 
 
 # Admin
@@ -80,13 +80,13 @@ dp.register_message_handler(fsm_update.cancel_changing, commands=['cancel'],stat
 dp.register_message_handler(fsm_update.check_name, state=UpdateFSM.name_event)
 dp.register_message_handler(fsm_update.change_data_value, state=UpdateFSM.data_val)
     
-dp.register_message_handler(changes_name_event, Text('name'))
-dp.register_message_handler(changes_cost_event, Text('cost_event'))
-dp.register_message_handler(changes_time_event, Text('time'))
-dp.register_message_handler(changes_weekend_event, Text('weekday'))
-dp.register_message_handler(changes_add_info_event, Text('add_info'))
-dp.register_message_handler(changes_places_event, Text('places'))
-dp.register_message_handler(changes_rows_event, Text('rows'))
+dp.register_message_handler(changes_name_event,IsAdmin(), Text('name'))
+dp.register_message_handler(changes_cost_event,IsAdmin(), Text('cost_event'))
+dp.register_message_handler(changes_time_event,IsAdmin(), Text('time'))
+dp.register_message_handler(changes_weekend_event,IsAdmin(), Text('weekday'))
+dp.register_message_handler(changes_add_info_event,IsAdmin(), Text('add_info'))
+dp.register_message_handler(changes_places_event,IsAdmin(), Text('places'))
+dp.register_message_handler(changes_rows_event,IsAdmin(), Text('rows'))
 
 
 

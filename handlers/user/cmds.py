@@ -8,13 +8,10 @@ Here the comands, whick you can use:
 /start
 /help
 /events
-/event
+/eventinfo
 /buy
 
 """
-# async def on_startup(_) -> None:
-#     await db_connect()
-#     print('Подключение к Базе Данных прошло успешно!')
 
 
 
@@ -31,10 +28,14 @@ async def cmd_help(message: types.Message):
     menu = await user_menu()
     await message.answer(text=HELP, reply_markup=menu)
 
+
 async def cmd_event(message: types.Message):
     await start_TextState(message)
+    
+    
 async def cmd_buy(message:types.Message):
     await start_BuyTicket(message)
+
 
 async def cmd_events(message: types.Message):
     await Events_handler(message)
