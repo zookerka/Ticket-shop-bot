@@ -45,10 +45,17 @@ async def db_book_place(name_event):
         return True
     else:
         return False
+    
+    
 async def db_get_data_by_name(name_event):
     cur.execute("SELECT * FROM events WHERE name = ?", (name_event,))
-    event = cur.fetchall()
-    return event
+    event = cur.fetchone()  
+    if event:
+        event = list(event)  
+        event_str = ', '.join(str(e) for e in event)  
+        return event_str
+    else:
+        return None  
 
 
 

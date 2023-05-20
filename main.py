@@ -6,6 +6,8 @@ from aiogram.dispatcher.filters import Text
 from models.my_sqlltie3 import db_connect
 from handlers.admin.def_filters import *
 from filter.is_admin import IsAdmin
+from filter.is_user import IsUser
+from handlers.admin.cmds import *
 
 async def on_startup(_):
     await db_connect()
@@ -13,10 +15,10 @@ async def on_startup(_):
 
 # User
 dp.register_message_handler(cmd_start, commands='start')
-dp.register_message_handler(cmd_event, commands='event')
-dp.register_message_handler(cmd_events, commands='events')
-dp.register_message_handler(cmd_buy, commands='buy')
-dp.register_message_handler(cmd_help, commands='help')
+dp.register_message_handler(cmd_event,IsUser(),commands='event')
+dp.register_message_handler(cmd_events,IsUser(), commands='events')
+dp.register_message_handler(cmd_buy,IsUser(), commands='buy')
+dp.register_message_handler(cmd_help,IsUser(), commands='help')
 
 dp.register_message_handler(Schedule_handler, Text('Schedule for today'))
 dp.register_message_handler(main_menu, Text('Back to main menu'))
@@ -42,11 +44,17 @@ dp.register_message_handler(start_BuyTicket, Text('Buy a ticket'))
 
 
 
-dp.register_message_handler(start_button_clicked, IsAdmin() ,Text('Add new event'))
+dp.register_message_handler(cmd_help_admin,IsAdmin(),commands=['help'])
+dp.register_message_handler(cmd_add_event_admin,IsAdmin(), commands=['addevent'])
+dp.register_message_handler(cmd_events_admin,IsAdmin(), commands=['events'])
 
+
+
+
+
+dp.register_message_handler(start_button_clicked, IsAdmin() ,Text('Add new event'))
 dp.register_message_handler(get_data, IsAdmin(),Text('Check all events'))
 dp.register_message_handler(select_changes,IsAdmin(), Text('Change event'))
-
 
 
 

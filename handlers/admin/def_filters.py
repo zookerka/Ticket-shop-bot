@@ -18,7 +18,7 @@ class BookingFSM(StatesGroup):
 
 
     async def cancel_booking(self, message: Message, state: FSMContext):
-        await message.answer("Вы отменили бронирование")
+        await message.answer("You have canceled the creating")
         await state.finish()
         
     async def start(self, message: Message):
@@ -58,7 +58,7 @@ class BookingFSM(StatesGroup):
     async def process_places_event(self, message: Message, state: FSMContext):
         async with state.proxy() as data:
             data['places_event'] = message.text
-        await message.answer("Type the gow many rows will be")
+        await message.answer("Type the how many rows will be")
         await BookingFSM.get_rows_event.set()
     
 
@@ -68,7 +68,7 @@ class BookingFSM(StatesGroup):
             data['rows_event'] = message.text
             await db_create_event(data)
         await state.finish()
-        await message.answer(f"Вы записали: {data['name_event']} (cost: {data['cost_ticket']}, weekday: {data['weekday_event']}, time: {data['time_event']}, places:{data['places_event']}, rows: {data['rows_event']})", reply_markup= await menu)
+        await message.answer(f"You have create: {data['name_event']} (cost: {data['cost_ticket']}, weekday: {data['weekday_event']}, time: {data['time_event']}, places:{data['places_event']}, rows: {data['rows_event']})", reply_markup= await menu)
 
 
 
@@ -164,8 +164,8 @@ async def changes_time_event(message:types.Message):
     
 async def changes_weekend_event(message:types.Message):
     global changing_value
-    changing_value ='weekend'
-    await message.answer('You chose to change a weekend of event.')
+    changing_value ='weekday'
+    await message.answer('You chose to change a weekday of event.')
     fsm = UpdateFSM()
     await fsm.start_changes(message)
     await fsm.name_event.set()

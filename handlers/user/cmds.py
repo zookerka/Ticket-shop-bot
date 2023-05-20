@@ -2,7 +2,7 @@ from aiogram import types
 from keyboards.user.ReplyKB import *
 from config import ADMINS
 from models.my_sqlltie3 import *
-
+from .filters_kb import *
 HELP = """
 Here the comands, whick you can use:
 /start
@@ -28,21 +28,15 @@ async def cmd_start(message: types.Message):
         await message.answer(text='Welcome to Admin panel!', reply_markup=keyboard)
 
 async def cmd_help(message: types.Message):
-    await message.answer(text=HELP)
+    menu = await user_menu()
+    await message.answer(text=HELP, reply_markup=menu)
 
 async def cmd_event(message: types.Message):
-    pass
-async def cmd_buy():
-    pass        
+    await start_TextState(message)
+async def cmd_buy(message:types.Message):
+    await start_BuyTicket(message)
 
 async def cmd_events(message: types.Message):
-    menu = user_menu()
+    await Events_handler(message)
     
-    rows = await db_check_all()
-    response = "All events:\n"
-    if rows is not None:
-        for row in rows:
-            response += f"{row[0]}, Cost: {row[1]}, Weekend: {row[2]}, Time: {row[3]}, Additional info: {row[4]}, Places: {row[5]}, Rows: {row[6]}\n ---------------------------------------------------------------------------------------- \n"
-        await message.answer(response, reply_markup= await menu)
-    else:
-        await message.answer("No rows found.", reply_markup= await menu)
+

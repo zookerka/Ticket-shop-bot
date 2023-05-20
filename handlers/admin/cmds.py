@@ -1,19 +1,21 @@
 from aiogram import types
-from keyboards.user.ReplyKB import get_keyboard
-
+from keyboards.user.ReplyKB import admin_main_menu
+from .def_filters import *
 
 HELP = """
 Here the comands, whick you can use:
-/start
 /help
 /events
-/event
-/buy
-
+/add_event
 """
 
-async def cmd_help(message: types.Message):
+async def cmd_help_admin(message: types.Message):
     await message.answer(text=HELP)
 
-async def cmd_add_event(message:types.Message):
-    pass
+async def cmd_add_event_admin(message:types.Message):
+    await start_button_clicked(message)
+
+async def cmd_events_admin(message:types.Message):
+    await get_data(message)
+    
+    
