@@ -7,7 +7,7 @@ async def user_menu ():
         [KeyboardButton(text='Schedule for today'),
         KeyboardButton(text='Buy a ticket')],
         [KeyboardButton(text='Events'),
-         KeyboardButton(text='Event')]
+         KeyboardButton(text='Info about event')]
 
     ])
 
