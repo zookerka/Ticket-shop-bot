@@ -1,0 +1,10 @@
+# cahce
+__pycache__/
+
+# project files
+config.py
+
+
+# vscode
+.vscode/
+.history/

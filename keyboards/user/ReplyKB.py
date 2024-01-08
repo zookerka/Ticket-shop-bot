@@ -13,6 +13,12 @@ async def user_menu ():
 
     return kb
 
+async def back_kb ():
+    kb = ReplyKeyboardMarkup(resize_keyboard=True, keyboard=[
+        [KeyboardButton(text='<== Back')]
+    ])
+    return kb
+
 async def keyboard_main_menu():
     kb = ReplyKeyboardMarkup(resize_keyboard=True,keyboard=[
         [KeyboardButton(text='Back to main menu')]
@@ -30,7 +36,8 @@ async def admin_main_menu():
         [KeyboardButton(text='Add new event'),
          KeyboardButton(text='Change event')],
         [KeyboardButton(text='Delete event'),
-         KeyboardButton(text='Check all events')]
+         KeyboardButton(text='Check all events')],
+         [KeyboardButton(text='User menu')]
     ])
     return kb
 
@@ -44,6 +51,7 @@ async def kb_change_event():
         KeyboardButton(text='additional_info')],
         [KeyboardButton(text='places'),
         KeyboardButton(text='rows')],
+
 
     ])
     return kb

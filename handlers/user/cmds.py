@@ -1,8 +1,10 @@
 from aiogram import types
 from keyboards.user.ReplyKB import *
-from config import ADMINS
-from models.my_sqlltie3 import *
-from .filters_kb import *
+from handlers.user.message_handlers import *
+from loader import dp
+from filter.is_user import IsUser
+
+
 HELP = """
 Here the comands, whick you can use:
 /start
@@ -13,30 +15,27 @@ Here the comands, whick you can use:
 
 """
 
-
-
-
-async def cmd_start(message: types.Message):
-    if message.from_user.id != ADMINS[0]:
-        keyboard = await user_menu()
-        await message.bot.send_message(chat_id=message.chat.id,text='Welocome to Ticket Sale bot!\nHere you can to buy a ticket for an event', reply_markup=keyboard)
-    else:
-        keyboard = await admin_main_menu()
-        await message.answer(text='Welcome to Admin panel!', reply_markup=keyboard)
-
+# help 
+@dp.message_handler(IsUser(), commands='help')
 async def cmd_help(message: types.Message):
     menu = await user_menu()
     await message.answer(text=HELP, reply_markup=menu)
 
 
-async def cmd_event(message: types.Message):
-    await start_TextState(message)
-    
-    
-async def cmd_buy(message:types.Message):
-    await start_BuyTicket(message)
+# # check all events
+# @dp.message_handler(IsUser(), commands='events')
+# async def cmd_event(message: types.Message):
+#     await start_TextState(message)
 
 
+# # buy ticket 
+# @dp.message_handler(IsUser(), commands='buy')
+# async def cmd_buy(message:types.Message):
+#     await start_BuyTicket(message)
+
+
+# info about event 
+@dp.message_handler(IsUser(),commands='eventinfo')
 async def cmd_events(message: types.Message):
     await Events_handler(message)
     
